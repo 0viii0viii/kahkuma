@@ -17,6 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preload" as="image" href="/denim.png" />
+      </head>
       <body className="min-h-screen w-full bg-black overscroll-none">
         <NavigationBar />
         <div className="min-h-screen w-full bg-black overscroll-none">{children}</div>

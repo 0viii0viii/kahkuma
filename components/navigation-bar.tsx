@@ -29,7 +29,7 @@ const NavigationBar = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-full border-b border-[#FFD700] border-b-2 border-dashed py-4">
+    <div className="flex justify-center items-center w-full py-4">
       <NavigationMenu>
         <NavigationMenuList>
           {navItems.map((item) => (
@@ -37,8 +37,8 @@ const NavigationBar = () => {
               <NavigationMenuLink
                 className={cn(
                   navigationMenuTriggerStyle(),
-                  'text-sm font-medium transition-colors bg-unset hover:bg-unset focus:bg-unset',
-                  pathname === item.href ? 'text-black font-bold' : 'text-gray-600'
+                  'text-xl font-medium transition-colors bg-unset hover:bg-unset focus:bg-unset hover:text-white',
+                  pathname === item.href ? 'text-black font-bold' : 'text-black'
                 )}
                 href={item.href}
                 onClick={(e) => handleNavClick(item, e)}

@@ -22,7 +22,7 @@ const wordVariants = {
 
 export default function HomeMotion() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-black pt-8">
+    <div className="flex flex-col items-center justify-center min-h-screen pt-8">
       {/* Hero Content */}
       <div className="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row items-center justify-between gap-12">
         {/* Text Content */}

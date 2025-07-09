@@ -22,7 +22,7 @@ export default function RootLayout({
       </head>
       <body className="h-screen w-full bg-black overscroll-none flex flex-col">
         <NavigationBar />
-        <div className="flex-1 w-full bg-black overscroll-none ">{children}</div>
+        <div className="flex-1 w-full max-w-6xl mx-auto bg-black overscroll-none px-4 md:px-8 lg:px-12">{children}</div>
       </body>
     </html>
   );

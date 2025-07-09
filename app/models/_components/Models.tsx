@@ -58,7 +58,7 @@ const containerVariants = {
 
 export default function ModelsMotion() {
   return (
-    <div id="works" className="min-h-screen bg-black py-20">
+    <div id="works" className="min-h-screen bg-black py-20 border-t border-neutral-800">
       {/* Section Header */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}

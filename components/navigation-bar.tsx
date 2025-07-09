@@ -29,7 +29,7 @@ const NavigationBar = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-full border-b border-[#FFD700] border-b-2 border-dashed  py-4">
+    <div className="flex justify-center items-center w-full border-b border-[#FFD700] border-b-2 border-dashed py-4">
       <NavigationMenu>
         <NavigationMenuList>
           {navItems.map((item) => (

@@ -65,7 +65,7 @@ export default function ModelsMotion() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.8 }}
-        className="text-center mb-16 px-4"
+        className=" text-center mb-16 px-4"
       >
         <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Works</h2>
         <p className="text-xl text-gray-300 max-w-2xl mx-auto">각각의 작품은 독특한 스토리와 비전을 담고 있습니다</p>
@@ -87,7 +87,7 @@ export default function ModelsMotion() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="relative overflow-hidden rounded-2xl bg-neutral-900 border border-neutral-800 shadow-2xl"
+              className="relative overflow-hidden border-6 border-white shadow-2xl"
               style={{ willChange: 'transform' }}
             >
               {/* Image Container */}

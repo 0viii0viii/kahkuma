@@ -20,9 +20,9 @@ export default function RootLayout({
       <head>
         <link rel="preload" as="image" href="/denim.png" />
       </head>
-      <body className="min-h-screen w-full bg-black overscroll-none">
+      <body className="h-screen w-full bg-black overscroll-none flex flex-col">
         <NavigationBar />
-        <div className="min-h-screen w-full bg-black overscroll-none">{children}</div>
+        <div className="flex-1 w-full bg-black overscroll-none ">{children}</div>
       </body>
     </html>
   );

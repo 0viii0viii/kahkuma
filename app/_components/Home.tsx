@@ -22,7 +22,7 @@ const wordVariants = {
 
 export default function HomeMotion() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-black">
+    <div className="flex flex-col items-center justify-center bg-black pt-16">
       {/* 웰컴 텍스트 단어별 애니메이션 */}
       <motion.div
         className="mb-8 text-3xl md:text-4xl font-bold text-white text-center drop-shadow-lg flex flex-wrap justify-center"

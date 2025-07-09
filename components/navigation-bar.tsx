@@ -14,10 +14,19 @@ const NavigationBar = () => {
   const pathname = usePathname();
 
   const navItems = [
-    { href: '/', label: 'HOME' },
-    { href: '/models', label: 'MODELS' },
-    { href: '/about', label: 'ABOUT' },
+    { href: '/', label: 'HOME', isScroll: false },
+    { href: '#works', label: 'WORKS', isScroll: true },
   ];
+
+  const handleNavClick = (item: { href: string; label: string; isScroll: boolean }, e: React.MouseEvent) => {
+    if (item.isScroll) {
+      e.preventDefault();
+      const element = document.getElementById('works');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
 
   return (
     <div className="flex justify-center items-center w-full border-b border-[#FFD700] border-b-2 border-dashed  py-4">
@@ -32,6 +41,7 @@ const NavigationBar = () => {
                   pathname === item.href ? 'text-black font-bold' : 'text-gray-600'
                 )}
                 href={item.href}
+                onClick={(e) => handleNavClick(item, e)}
               >
                 {item.label}
               </NavigationMenuLink>

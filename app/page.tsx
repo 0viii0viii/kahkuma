@@ -1,5 +1,6 @@
 import ThreeDModels from './_components/3DModels';
 import HomeMotion from './_components/Home';
+import Footer from './_components/Footer';
 
 export default function HomePage() {
   return (
@@ -12,6 +13,7 @@ export default function HomePage() {
       <section className="min-h-screen">
         <ThreeDModels />
       </section>
+      <Footer />
     </div>
   );
 }

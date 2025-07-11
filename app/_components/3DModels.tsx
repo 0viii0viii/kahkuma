@@ -120,14 +120,14 @@ function ModelCard({ model }: { model: ModelData }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.7 }}
-      className="relative overflow-hidden border-6 border-white shadow-2xl rounded-2xl bg-black max-w-md mx-auto"
+      className="relative overflow-hidden border-4 sm:border-6 border-white shadow-2xl rounded-xl sm:rounded-2xl bg-black w-full max-w-sm sm:max-w-md mx-auto"
       style={{ willChange: 'transform' }}
     >
-      <div className="aspect-[4/3] w-full h-80 md:h-96 relative">
+      <div className="aspect-[4/3] w-full h-64 sm:h-80 md:h-96 relative">
         {/* 줌 버튼 */}
         <button
           onClick={() => setEnableScrollZoom(!enableScrollZoom)}
-          className={`absolute top-2 right-2 z-20 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 ${
+          className={`absolute top-1 sm:top-2 right-1 sm:right-2 z-20 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md sm:rounded-lg text-xs font-medium transition-all duration-200 ${
             enableScrollZoom
               ? 'bg-[url("/68.jpg")] bg-cover bg-center text-white font-bold shadow-lg'
               : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
@@ -168,12 +168,12 @@ function ModelCard({ model }: { model: ModelData }) {
           <OrbitControls enablePan={false} enableZoom={enableScrollZoom} enableRotate={true} zoomSpeed={0.8} />
         </Canvas>
       </div>
-      <div className="p-6 md:p-8 relative z-10">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <h3 className="text-xl md:text-2xl font-bold text-white">{model.name}</h3>
+      <div className="p-4 sm:p-6 md:p-8 relative z-10">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
+          <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white">{model.name}</h3>
           <span className="text-white text-sm font-medium">{model.year}</span>
         </div>
-        <p className="text-gray-300 leading-relaxed text-sm md:text-base mt-3">{model.description}</p>
+        <p className="text-gray-300 leading-relaxed text-sm md:text-base mt-2 sm:mt-3">{model.description}</p>
       </div>
     </motion.div>
   );
@@ -181,19 +181,19 @@ function ModelCard({ model }: { model: ModelData }) {
 
 export default function ThreeDModels() {
   return (
-    <section id="works" className="py-16 px-4">
-      <div className="max-w-7xl mx-auto">
+    <section id="works" className="py-16 px-2 sm:px-4">
+      <div className="max-w-7xl mx-auto px-2 sm:px-0">
         <motion.h2
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-4xl md:text-6xl font-bold text-center text-white mb-16"
+          className="text-3xl sm:text-4xl md:text-6xl font-bold text-center text-white mb-12 sm:mb-16 px-2"
         >
           3D WORKS
         </motion.h2>
 
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 sm:gap-8">
           {modelData.map((model) => (
             <ModelCard key={model.id} model={model} />
           ))}

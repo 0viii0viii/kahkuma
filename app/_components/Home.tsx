@@ -65,14 +65,14 @@ export default function HomeMotion() {
           >
             {/* Artist Info */}
             <div className="p-6 rounded-lg">
-              <h2 className="text-xl font-bold text-white mb-4">Artist</h2>
+              <h2 className="text-xl font-bold text-white mb-4">3D Modeller</h2>
               <p className="text-white mb-2">
                 <span className="font-semibold">
                   김희현 <span className="text-sky-300">(Heehyun Kim)</span>
                 </span>
               </p>
               <p className="text-gray-300 text-sm">
-                카쿠마의 창작자이자 아티스트입니다. 독특한 시각적 스타일과 창의적인 표현으로 새로운 예술적 경험을
+                아쿠마 그 자체인 3D 모델러입니다. 독특한 시각적 스타일과 창의적인 표현으로 새로운 예술적 경험을
                 선사합니다.
               </p>
             </div>

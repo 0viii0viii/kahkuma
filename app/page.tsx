@@ -1,5 +1,6 @@
+import ThreeDModels from './_components/3DModels';
 import HomeMotion from './_components/Home';
-import ModelsMotion from './models/_components/Models';
+import ModelsMotion from './_components/Models';
 
 export default function HomePage() {
   return (
@@ -12,6 +13,9 @@ export default function HomePage() {
       {/* Models Gallery Section */}
       <section className="min-h-screen">
         <ModelsMotion />
+      </section>
+      <section className="min-h-screen">
+        <ThreeDModels />
       </section>
     </div>
   );

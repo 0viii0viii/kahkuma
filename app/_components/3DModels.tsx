@@ -185,8 +185,10 @@ const ModelCard = React.memo(({ model }: { model: ModelData }) => {
       background: model.backgroundColor || 'transparent',
       borderRadius: '1rem',
       transition: 'background-color 0.3s ease',
+      // 모바일에서 터치 이벤트 처리 개선
+      touchAction: enableInteraction ? 'none' : 'auto',
     }),
-    [model.backgroundColor]
+    [model.backgroundColor, enableInteraction]
   );
 
   // 카메라 설정 메모이제이션
@@ -205,6 +207,9 @@ const ModelCard = React.memo(({ model }: { model: ModelData }) => {
       enableZoom: enableInteraction,
       enableRotate: enableInteraction,
       zoomSpeed: 0.8,
+      // 모바일에서 스크롤 방지 문제 해결
+      enableDamping: true,
+      dampingFactor: 0.05,
     }),
     [enableInteraction]
   );
@@ -252,7 +257,7 @@ const ModelCard = React.memo(({ model }: { model: ModelData }) => {
               color={model.color}
               enableInteraction={enableInteraction}
             />
-            <OrbitControls {...orbitControlsConfig} />
+            {enableInteraction && <OrbitControls {...orbitControlsConfig} />}
           </Canvas>
         ) : (
           <div className="flex items-center justify-center h-full bg-black rounded-xl sm:rounded-2xl">

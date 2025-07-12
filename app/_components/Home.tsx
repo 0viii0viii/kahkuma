@@ -1,10 +1,10 @@
 'use client';
 
+import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-
-const welcomeText = "Kahkuma's Studio";
-const words = welcomeText.split(' ');
+import { useTranslation } from 'react-i18next';
+import '../../lib/i18n-client';
 
 const containerVariants = {
   hidden: {},
@@ -21,6 +21,10 @@ const wordVariants = {
 };
 
 export default function HomeMotion() {
+  const { t } = useTranslation();
+  const welcomeText = t('home.title');
+  const words = welcomeText.split(' ');
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen pt-8">
       {/* Hero Content */}
@@ -53,7 +57,17 @@ export default function HomeMotion() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl"
           >
-            독창적인 예술적 비전을 통해 새로운 경험을 창조하는 브랜드입니다
+            {t('home.subtitle')}
+          </motion.p>
+
+          {/* Description */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="text-base md:text-lg text-gray-400 mb-8 max-w-2xl"
+          >
+            {t('home.description')}
           </motion.p>
 
           {/* About Content */}
@@ -65,16 +79,11 @@ export default function HomeMotion() {
           >
             {/* Artist Info */}
             <div className="p-6 rounded-lg">
-              <h2 className="text-xl font-bold text-white mb-4">3D Modeller</h2>
+              <h2 className="text-xl font-bold text-white mb-4">{t('home.role')}</h2>
               <p className="text-white mb-2">
-                <span className="font-semibold">
-                  김희현 <span className="text-sky-300">(Heehyun Kim)</span>
-                </span>
+                <span className="font-semibold">{t('home.artist_name')}</span>
               </p>
-              <p className="text-gray-300 text-sm">
-                아쿠마 그 자체인 3D 모델러입니다. 독특한 시각적 스타일과 창의적인 표현으로 새로운 예술적 경험을
-                선사합니다.
-              </p>
+              <p className="text-gray-300 text-sm">{t('home.artist_desc')}</p>
             </div>
 
             {/* Follow Us */}
@@ -86,10 +95,10 @@ export default function HomeMotion() {
                 <div>
                   <p className="text-white font-semibold cursor-pointer hover:text-pink-500">
                     <a href="https://www.instagram.com/kahkuma" target="_blank" rel="noopener noreferrer">
-                      @kahkuma
+                      {t('home.instagram_id')}
                     </a>
                   </p>
-                  <p className="text-gray-300 text-sm">최신 작품과 소식을 인스타그램에서 확인하세요</p>
+                  <p className="text-gray-300 text-sm">{t('home.instagram_desc')}</p>
                 </div>
               </div>
             </div>

@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -9,13 +10,16 @@ import {
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
+import '../lib/i18n-client';
 
 const NavigationBar = () => {
   const pathname = usePathname();
+  const { t } = useTranslation();
 
   const navItems = [
-    { href: '/', label: 'HOME', isScroll: false },
-    { href: '#works', label: 'WORKS', isScroll: true },
+    { href: '/', label: t('nav.home'), isScroll: false },
+    { href: '#works', label: t('nav.works'), isScroll: true },
   ];
 
   const handleNavClick = (item: { href: string; label: string; isScroll: boolean }, e: React.MouseEvent) => {
@@ -29,7 +33,7 @@ const NavigationBar = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-full py-4">
+    <div className="w-full flex justify-center items-center py-4">
       <NavigationMenu>
         <NavigationMenuList>
           {navItems.map((item) => (

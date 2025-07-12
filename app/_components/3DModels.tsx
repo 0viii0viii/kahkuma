@@ -4,6 +4,8 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { motion } from 'framer-motion';
 import React, { useCallback, useMemo } from 'react';
 import { Group, Object3D, Mesh } from 'three';
+import { useTranslation } from 'react-i18next';
+import '../../lib/i18n-client';
 
 interface ModelData {
   id: string;
@@ -20,44 +22,44 @@ interface ModelData {
 const modelData: ModelData[] = [
   {
     id: 'cometboy',
-    name: 'Comet Boy',
+    name: 'model.cometboy.name',
     path: '/3d/cometboy.glb',
     scale: 21.5,
     position: [0, -0.95, 0],
-    description: 'comet boy',
+    description: 'model.cometboy.description',
     year: '2025',
     color: '#FF6B6B',
     backgroundColor: '#000',
   },
   {
     id: 'iceboy',
-    name: 'Ice Boy',
+    name: 'model.iceboy.name',
     path: '/3d/ice-boy.glb',
     scale: 11,
     position: [0, -0.85, 0],
-    description: 'ice boy',
+    description: 'model.iceboy.description',
     year: '2025',
     color: '#4ECDC4',
     backgroundColor: '#000',
   },
   {
     id: 'samboypen',
-    name: 'SamBoy Pen',
+    name: 'model.samboypen.name',
     path: '/3d/samboypen.glb',
     scale: 10.5,
     position: [0, -0.85, 0],
-    description: 'sam boy pen',
+    description: 'model.samboypen.description',
     year: '2025',
     color: '#45B7D1',
     backgroundColor: '#000',
   },
   {
     id: 'deeperent',
-    name: 'Deeperent Double Lovers',
+    name: 'model.deeperent.name',
     path: '/3d/deeperent_double_lovers.glb',
     scale: 16,
     position: [0, -1.5, 0],
-    description: 'deeperent double lovers',
+    description: 'model.deeperent.description',
     year: '2025',
     color: '#FF8A3D',
     backgroundColor: '#000',
@@ -155,6 +157,7 @@ LoadingSpinner.displayName = 'LoadingSpinner';
 
 // 성능 최적화된 모델 카드 컴포넌트
 const ModelCard = React.memo(({ model }: { model: ModelData }) => {
+  const { t } = useTranslation();
   const [enableInteraction, setEnableInteraction] = React.useState(false);
   const [isInView, setIsInView] = React.useState(false);
 
@@ -235,7 +238,7 @@ const ModelCard = React.memo(({ model }: { model: ModelData }) => {
               : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
           }`}
         >
-          {enableInteraction ? 'INTERACT ON' : 'INTERACT OFF'}
+          {enableInteraction ? t('works.interact.on') : t('works.interact.off')}
         </button>
 
         {isInView ? (
@@ -268,10 +271,10 @@ const ModelCard = React.memo(({ model }: { model: ModelData }) => {
 
       <div className="p-4 sm:p-6 md:p-8 relative z-10">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
-          <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white">{model.name}</h3>
+          <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white">{t(model.name)}</h3>
           <span className="text-white text-sm font-medium">{model.year}</span>
         </div>
-        <p className="text-gray-300 leading-relaxed text-sm md:text-base mt-2 sm:mt-3">{model.description}</p>
+        <p className="text-gray-300 leading-relaxed text-sm md:text-base mt-2 sm:mt-3">{t(model.description)}</p>
       </div>
     </motion.div>
   );
@@ -281,6 +284,7 @@ ModelCard.displayName = 'ModelCard';
 
 // 성능 최적화된 메인 컴포넌트
 const ThreeDModels = React.memo(() => {
+  const { t } = useTranslation();
   // 모델 데이터 메모이제이션
   const memoizedModelData = useMemo(() => modelData, []);
 
@@ -294,7 +298,7 @@ const ThreeDModels = React.memo(() => {
           transition={{ duration: 0.8 }}
           className="text-3xl sm:text-4xl md:text-6xl font-bold text-center text-white mb-12 sm:mb-16 px-2"
         >
-          3D WORKS
+          {t('works.title')}
         </motion.h2>
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 sm:gap-8">

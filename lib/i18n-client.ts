@@ -1,8 +1,8 @@
 'use client';
 
 import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import { initReactI18next } from 'react-i18next';
 
 const resources = {
   ko: {
@@ -34,8 +34,8 @@ const resources = {
       'model.deeperent.description': 'deeperent double lovers',
 
       // Footer
-      'footer.copyright': '© 2025 KAHKUMA. 모든 권리 보유.',
-      'footer.rights': '모든 권리 보유.',
+      'footer.copyright': '© 2025 KAHKUMA. All rights reserved',
+      'footer.rights': 'All rights reserved',
       'footer.cta': '함께 작업해보시겠습니까?',
       'footer.contact': 'Instagram으로 문의해주세요',
       'footer.instagram': 'Instagram',

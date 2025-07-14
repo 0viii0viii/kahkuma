@@ -3,8 +3,8 @@ import { OrbitControls, useGLTF } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { motion } from 'framer-motion';
 import React, { useCallback, useMemo } from 'react';
-import { Group, Object3D, Mesh } from 'three';
 import { useTranslation } from 'react-i18next';
+import { Group, Mesh, Object3D } from 'three';
 import '../../lib/i18n-client';
 
 interface ModelData {
@@ -301,7 +301,7 @@ const ThreeDModels = React.memo(() => {
           {t('works.title')}
         </motion.h2>
 
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 sm:gap-8">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-40">
           {memoizedModelData.map((model) => (
             <ModelCard key={model.id} model={model} />
           ))}
@@ -320,6 +320,7 @@ const DynamicThreeDModels = React.lazy(() => Promise.resolve({ default: ThreeDMo
 const preloadModel = (modelPath: string) => {
   const link = document.createElement('link');
   link.rel = 'preload';
+  link.crossOrigin = 'anonymous';
   link.as = 'fetch';
   link.href = modelPath;
   document.head.appendChild(link);

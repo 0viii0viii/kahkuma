@@ -1,6 +1,8 @@
 import LanguageSelector from '@/components/language-selector';
 import NavigationBar from '@/components/navigation-bar';
+import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+
 import './globals.css';
 
 const SUPPORTED_LANGS = ['ko', 'en', 'ja'] as const;
@@ -77,6 +79,7 @@ export default function RootLayout({
           <LanguageSelector />
         </div>
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );

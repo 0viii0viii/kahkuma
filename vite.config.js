@@ -15,13 +15,18 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2}'],
         maximumFileSizeToCacheInBytes: 30 * 1024 * 1024,
+        cleanupOutdatedCaches: true,
+        clientsClaim: true,
+        skipWaiting: true,
         runtimeCaching: [
           {
             urlPattern: ({ url }) => url.pathname.endsWith('.glb'),
-            handler: 'CacheFirst',
+            // v2: previous CacheFirst pinned stale Draco GLBs after the switch to
+            // Meshopt. StaleWhileRevalidate keeps models fresh if they ever change.
+            handler: 'StaleWhileRevalidate',
             options: {
-              cacheName: 'artwork-models',
-              expiration: { maxEntries: 20, maxAgeSeconds: 60 * 60 * 24 * 30 },
+              cacheName: 'artwork-models-v2',
+              expiration: { maxEntries: 40, maxAgeSeconds: 60 * 60 * 24 * 30 },
               cacheableResponse: { statuses: [0, 200] },
             },
           },

@@ -20,18 +20,6 @@ export default function App() {
         </nav>
       </header>
 
-      <section className="hero">
-        <p className="hero__eyebrow">SELECTED WORKS · {works.length}</p>
-        <h1 className="hero__title">
-          만질 수 없는 조각들,
-          <br />
-          빛 아래 놓다.
-        </h1>
-        <p className="hero__lede">
-          스크롤로 컬렉션을 거닐고, 작품을 눌러 무대 위에서 360°로 감상하세요.
-        </p>
-      </section>
-
       <main className="grid">
         {works.map((work, i) => (
           <WorkCard key={work.id} work={work} index={i} onOpen={setActive} />

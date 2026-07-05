@@ -119,6 +119,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: clamp(1rem, 2.5vw, 2rem);
+  padding-top: clamp(2.5rem, 6vw, 4.5rem);
   padding-bottom: 6rem;
 }
 

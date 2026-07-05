@@ -232,12 +232,38 @@ body {
 /* ---------- Footer ---------- */
 .footer {
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
   padding: 2.5rem 0;
   border-top: 1px solid var(--line);
   color: var(--text-dim);
   font-size: 0.78rem;
   letter-spacing: 0.05em;
+}
+
+.footer__links {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.footer__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.footer__link:hover {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 /* ---------- Spotlight viewer ---------- */

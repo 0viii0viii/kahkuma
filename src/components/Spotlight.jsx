@@ -19,6 +19,10 @@ function Loader() {
 // studio-lit pedestal. Closes on ESC or backdrop click.
 export function Spotlight({ work, onClose }) {
   const [autoRotate, setAutoRotate] = useState(true);
+  const [inspecting, setInspecting] = useState(false);
+  const [selected, setSelected] = useState(null);
+  // Inspector is only meaningful for split, per-part models.
+  const canInspect = work && typeof work.palette === 'object';
 
   useEffect(() => {
     const onKey = (e) => e.key === 'Escape' && onClose();
@@ -43,14 +47,21 @@ export function Spotlight({ work, onClose }) {
         >
           <color attach="background" args={['#0a0a0c']} />
           <fog attach="fog" args={['#0a0a0c', 9, 24]} />
-          <ambientLight intensity={0.35} />
-          <spotLight position={[4, 8, 3]} angle={0.4} penumbra={1} intensity={90} color={work.accent} castShadow />
-          <directionalLight position={[-5, 4, -4]} intensity={0.6} color="#9db4ff" />
+          {/* Neutral white studio lighting — same for every model, no color tint */}
+          <ambientLight intensity={0.5} />
+          <spotLight position={[4, 8, 3]} angle={0.4} penumbra={1} intensity={90} castShadow />
+          <directionalLight position={[-5, 4, -4]} intensity={0.5} />
           {/* Models are normalized to ~2 units centered at origin (see Model.jsx),
               so the orbit target sits exactly on the model center → it spins in
               place instead of swinging around the screen. */}
           <Suspense fallback={<Loader />}>
-            <Model url={work.file} palette={work.palette} />
+            <Model
+              url={work.file}
+              palette={work.palette}
+              inspect={inspecting}
+              selectedPart={selected?.name}
+              onSelect={(name) => setSelected({ name, color: work.palette?.[name] })}
+            />
             <ContactShadows
               position={[0, -1.02, 0]}
               opacity={0.55}
@@ -61,14 +72,14 @@ export function Spotlight({ work, onClose }) {
             />
             <Environment resolution={256}>
               <Lightformer intensity={2} position={[0, 4, 3]} scale={[10, 5, 1]} />
-              <Lightformer intensity={1.2} color={work.accent} position={[-5, 1, -3]} scale={[6, 6, 1]} />
+              <Lightformer intensity={1.2} position={[-5, 1, -3]} scale={[6, 6, 1]} />
               <Lightformer intensity={0.8} position={[5, 2, -2]} scale={[6, 6, 1]} />
             </Environment>
           </Suspense>
           <OrbitControls
             makeDefault
             target={[0, 0, 0]}
-            autoRotate={autoRotate}
+            autoRotate={autoRotate && !inspecting}
             autoRotateSpeed={0.8}
             enablePan={false}
             minPolarAngle={0.3}
@@ -96,8 +107,29 @@ export function Spotlight({ work, onClose }) {
         >
           {autoRotate ? '자동 회전 ⏸' : '자동 회전 ▶'}
         </button>
-        <span className="viewer__hint">드래그로 회전 · 확대·축소</span>
+        {canInspect && (
+          <button
+            className={`chip ${inspecting ? 'chip--on' : ''}`}
+            onClick={() => {
+              setInspecting((v) => !v);
+              setSelected(null);
+            }}
+          >
+            {inspecting ? '파츠 검사 ✓' : '파츠 검사 🔍'}
+          </button>
+        )}
+        <span className="viewer__hint">
+          {inspecting ? '파츠를 클릭해 이름 확인' : '드래그로 회전 · 확대·축소'}
+        </span>
       </div>
+
+      {inspecting && selected && (
+        <div className="viewer__inspect" onClick={(e) => e.stopPropagation()}>
+          <span className="viewer__inspect-swatch" style={{ background: selected.color || '#eae6de' }} />
+          <code>{selected.name}</code>
+          <span className="viewer__inspect-hex">{selected.color || '기본(석고)'}</span>
+        </div>
+      )}
 
       <button className="viewer__close" onClick={onClose} aria-label="닫기">
         ✕

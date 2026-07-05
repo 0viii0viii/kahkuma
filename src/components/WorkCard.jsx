@@ -44,9 +44,9 @@ export function WorkCard({ work, index, onOpen }) {
             camera={{ position: [0, 0, 4], fov: 40 }}
             gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
           >
-            <ambientLight intensity={0.25} />
-            <spotLight position={[4, 6, 4]} intensity={2.6} angle={0.5} penumbra={0.9} color={work.accent} />
-            <directionalLight position={[-5, 3, -4]} intensity={0.5} color="#8ea6ff" />
+            <ambientLight intensity={0.45} />
+            <spotLight position={[4, 6, 4]} intensity={2.6} angle={0.5} penumbra={0.9} />
+            <directionalLight position={[-5, 3, -4]} intensity={0.5} />
             <Suspense fallback={null}>
               <PresentationControls
                 enabled={hovered}
@@ -65,14 +65,13 @@ export function WorkCard({ work, index, onOpen }) {
               {/* CDN-free reflections via inline lightformers */}
               <Environment resolution={128}>
                 <Lightformer intensity={1.5} position={[0, 3, 2]} scale={[6, 3, 1]} />
-                <Lightformer intensity={1} color={work.accent} position={[-3, 1, -2]} scale={[4, 4, 1]} />
+                <Lightformer intensity={1} position={[-3, 1, -2]} scale={[4, 4, 1]} />
               </Environment>
             </Suspense>
           </Canvas>
         ) : (
           <div className="card__skeleton" />
         )}
-        <div className="card__glow" />
       </div>
 
       <div className="card__meta">

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import * as THREE from 'three';
 import { useGLTF } from '@react-three/drei';
 
@@ -20,7 +20,7 @@ function makeMaterial(color) {
 
 // Renders a GLB. Cloned so the same asset can live in a grid card and the
 // spotlight stage simultaneously without sharing transforms/materials.
-export function Model({ url, palette, ...props }) {
+export function Model({ url, palette, inspect, selectedPart, onSelect, ...props }) {
   const { scene } = useGLTF(url, DRACO_PATH);
 
   // Source sculpts vary wildly in raw scale (~0.09 units tall). Normalize each
@@ -30,16 +30,27 @@ export function Model({ url, palette, ...props }) {
     const root = scene.clone(true);
     const plaster = makeMaterial();
     const cache = new Map();
+    // 'segments' auto-tints each part a distinct hue — a quick way to visualize
+    // a split model's separate meshes.
+    const segments = palette === 'segments';
+    let seg = 0;
     root.traverse((obj) => {
       if (obj.isMesh) {
-        // Key by mesh (node) name: material names get merged by the optimize
-        // pass's dedup(), but per-part node names survive.
-        const hex = palette?.[obj.name];
-        if (hex) {
-          if (!cache.has(hex)) cache.set(hex, makeMaterial(hex));
-          obj.material = cache.get(hex);
+        if (inspect) {
+          // Unique material per mesh so a single part can be highlighted.
+          obj.material = makeMaterial(palette?.[obj.name]);
+        } else if (segments) {
+          obj.material = makeMaterial(new THREE.Color().setHSL((seg++ * 0.13) % 1, 0.6, 0.55));
         } else {
-          obj.material = plaster;
+          // Key by mesh (node) name: material names get merged by the optimize
+          // pass's dedup(), but per-part node names survive.
+          const hex = palette?.[obj.name];
+          if (hex) {
+            if (!cache.has(hex)) cache.set(hex, makeMaterial(hex));
+            obj.material = cache.get(hex);
+          } else {
+            obj.material = plaster;
+          }
         }
         obj.castShadow = true;
         obj.receiveShadow = true;
@@ -57,7 +68,26 @@ export function Model({ url, palette, ...props }) {
     wrapper.add(root);
     wrapper.scale.setScalar(scale);
     return wrapper;
-  }, [scene, palette]);
+  }, [scene, palette, inspect]);
 
-  return <primitive object={cloned} {...props} />;
+  // Highlight the selected part (inspect mode only) by tinting its emissive.
+  useEffect(() => {
+    if (!inspect) return;
+    cloned.traverse((obj) => {
+      if (obj.isMesh && obj.material?.emissive) {
+        const on = obj.name === selectedPart;
+        obj.material.emissive.setHex(on ? 0x2266ff : 0x000000);
+        obj.material.emissiveIntensity = on ? 0.9 : 0;
+      }
+    });
+  }, [cloned, inspect, selectedPart]);
+
+  const handleClick = inspect
+    ? (e) => {
+        e.stopPropagation();
+        onSelect?.(e.object.name);
+      }
+    : undefined;
+
+  return <primitive object={cloned} onClick={handleClick} {...props} />;
 }

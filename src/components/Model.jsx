@@ -61,18 +61,19 @@ export function Model({ url, palette, inspect, selectedPart, onSelect, ...props 
         ? new THREE.Color().setHSL((seg++ * 0.13) % 1, 0.6, 0.55)
         : palette?.[obj.name] || PLASTER;
       obj.material.color.set(color);
-      // Softer highlight so the picked color still reads through the selection glow.
-      const on = inspect && obj.name === selectedPart;
-      obj.material.emissive.setHex(on ? 0x3a7bff : 0x000000);
-      obj.material.emissiveIntensity = on ? 0.35 : 0;
+      // No selection glow — the selected part shows its true color so picked
+      // colors read exactly. Selection is shown in the editor panel; parts are
+      // found by hovering. Emissive is driven only by the hover handler below.
+      obj.material.emissive.setHex(0x000000);
+      obj.material.emissiveIntensity = 0;
     });
-  }, [cloned, palette, inspect, selectedPart]);
+  }, [cloned, palette]);
 
-  // Hover highlight (inspect mode): emphasize the part under the cursor before
-  // it's clicked, unless it's already the selected part.
+  // Hover highlight (inspect mode): emphasize the part under the cursor so you
+  // can see which part you'll select — a transient cue, no color mixing.
   const hovered = useRef(null);
   const setHover = (obj, on) => {
-    if (!obj?.material?.emissive || obj.name === selectedPart) return;
+    if (!obj?.material?.emissive) return;
     obj.material.emissive.setHex(on ? 0xffffff : 0x000000);
     obj.material.emissiveIntensity = on ? 0.22 : 0;
   };

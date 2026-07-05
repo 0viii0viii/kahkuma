@@ -1,0 +1,316 @@
+.admin {
+  min-height: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 0 1.25rem 4rem;
+}
+
+.admin__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.75rem 0;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 2.5rem;
+}
+
+.admin__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--text);
+  text-decoration: none;
+}
+.admin__brand img {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  object-fit: cover;
+}
+.admin__bar span {
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  color: var(--text-dim);
+}
+
+.admin__card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 2rem;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: linear-gradient(160deg, var(--bg-soft), #0c0c10);
+}
+
+.admin__card h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.admin__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.admin__card input[type='email'],
+.admin__card input[type='password'],
+.admin__card input[type='text'],
+.admin__card input:not([type]) {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  font: inherit;
+}
+.admin__card input::placeholder {
+  color: var(--text-dim);
+}
+
+.admin__file {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.4rem;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: var(--text-dim);
+  cursor: pointer;
+  text-align: center;
+  word-break: break-all;
+}
+.admin__file input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.admin__btn {
+  margin-top: 0.3rem;
+  padding: 0.85rem;
+  border-radius: 999px;
+  border: none;
+  background: var(--text);
+  color: #0a0a0c;
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+.admin__btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.admin__link {
+  border: none;
+  background: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.admin__note {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--text-dim);
+}
+.admin__note b {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.admin__err {
+  color: #ff7a6b;
+  font-size: 0.85rem;
+}
+.admin__ok {
+  color: #7bd88f;
+  font-size: 0.9rem;
+}
+
+/* ---------- Works list ---------- */
+.admin__list {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.admin__list h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--text-dim);
+  margin-bottom: 0.3rem;
+}
+.admin__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-soft);
+}
+.admin__row > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.admin__row b {
+  font-family: var(--font-display);
+  font-weight: 500;
+}
+.admin__row span {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+.admin__row-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+.admin__pill {
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-size: 0.82rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+.admin__pill:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+.admin__pill--danger:hover {
+  border-color: #ff7a6b;
+  color: #ff7a6b;
+}
+.admin__empty {
+  margin-top: 2rem;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* ---------- Color editor (full screen) ---------- */
+.editor {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  background: #0a0a0c;
+}
+.editor__stage {
+  flex: 1;
+  min-width: 0;
+}
+.editor__panel {
+  width: 320px;
+  flex-shrink: 0;
+  padding: 1.5rem;
+  border-left: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+}
+.editor__head {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.editor__head b {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+.editor__hint {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+.editor__hint b {
+  color: var(--text);
+}
+.editor__selected {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  min-height: 44px;
+}
+.editor__selected code {
+  font-family: var(--font-display);
+}
+.editor__none {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+.editor__sw {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+}
+.editor__swatches {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.5rem;
+}
+.editor__chip {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.editor__chip:hover:not(:disabled) {
+  transform: scale(1.1);
+}
+.editor__chip:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.editor__custom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+.editor__custom input {
+  width: 48px;
+  height: 32px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: none;
+  cursor: pointer;
+}
+
+@media (max-width: 720px) {
+  .editor {
+    flex-direction: column;
+  }
+  .editor__panel {
+    width: auto;
+    border-left: none;
+    border-top: 1px solid var(--line);
+    max-height: 46vh;
+  }
+}

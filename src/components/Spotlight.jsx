@@ -19,10 +19,6 @@ function Loader() {
 // studio-lit pedestal. Closes on ESC or backdrop click.
 export function Spotlight({ work, onClose }) {
   const [autoRotate, setAutoRotate] = useState(true);
-  const [inspecting, setInspecting] = useState(false);
-  const [selected, setSelected] = useState(null);
-  // Inspector is only meaningful for split, per-part models.
-  const canInspect = work && typeof work.palette === 'object';
 
   useEffect(() => {
     const onKey = (e) => e.key === 'Escape' && onClose();
@@ -55,13 +51,7 @@ export function Spotlight({ work, onClose }) {
               so the orbit target sits exactly on the model center → it spins in
               place instead of swinging around the screen. */}
           <Suspense fallback={<Loader />}>
-            <Model
-              url={work.file}
-              palette={work.palette}
-              inspect={inspecting}
-              selectedPart={selected?.name}
-              onSelect={(name) => setSelected({ name, color: work.palette?.[name] })}
-            />
+            <Model url={work.file} palette={work.palette} />
             <ContactShadows
               position={[0, -1.02, 0]}
               opacity={0.55}
@@ -79,7 +69,7 @@ export function Spotlight({ work, onClose }) {
           <OrbitControls
             makeDefault
             target={[0, 0, 0]}
-            autoRotate={autoRotate && !inspecting}
+            autoRotate={autoRotate}
             autoRotateSpeed={0.8}
             enablePan={false}
             minPolarAngle={0.3}
@@ -107,29 +97,8 @@ export function Spotlight({ work, onClose }) {
         >
           {autoRotate ? '자동 회전 ⏸' : '자동 회전 ▶'}
         </button>
-        {canInspect && (
-          <button
-            className={`chip ${inspecting ? 'chip--on' : ''}`}
-            onClick={() => {
-              setInspecting((v) => !v);
-              setSelected(null);
-            }}
-          >
-            {inspecting ? '파츠 검사 ✓' : '파츠 검사 🔍'}
-          </button>
-        )}
-        <span className="viewer__hint">
-          {inspecting ? '파츠를 클릭해 이름 확인' : '드래그로 회전 · 확대·축소'}
-        </span>
+        <span className="viewer__hint">드래그로 회전 · 확대·축소</span>
       </div>
-
-      {inspecting && selected && (
-        <div className="viewer__inspect" onClick={(e) => e.stopPropagation()}>
-          <span className="viewer__inspect-swatch" style={{ background: selected.color || '#eae6de' }} />
-          <code>{selected.name}</code>
-          <span className="viewer__inspect-hex">{selected.color || '기본(석고)'}</span>
-        </div>
-      )}
 
       <button className="viewer__close" onClick={onClose} aria-label="닫기">
         ✕

@@ -1,10 +1,20 @@
-import { useState } from 'react';
-import { works } from './data/works.js';
+import { useEffect, useState } from 'react';
+import { works as curated } from './data/works.js';
+import { fetchWorks } from './lib/works.js';
 import { WorkCard } from './components/WorkCard.jsx';
 import { Spotlight } from './components/Spotlight.jsx';
 
 export default function App() {
   const [active, setActive] = useState(null);
+  // DB is the source of truth; fall back to the bundled curated set if it's
+  // empty/unreachable so the gallery is never blank.
+  const [works, setWorks] = useState(curated);
+
+  useEffect(() => {
+    fetchWorks().then((all) => {
+      if (all.length) setWorks(all);
+    });
+  }, []);
 
   return (
     <div className="app">

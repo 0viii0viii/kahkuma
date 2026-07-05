@@ -1,5 +1,8 @@
-// Compress raw GLB artworks for the web: Draco geometry compression + texture
+// Compress raw GLB artworks for the web: Meshopt geometry compression + texture
 // resize/re-encode. Run with `npm run models:optimize`.
+//
+// Meshopt (vs Draco) decodes an order of magnitude faster — important since our
+// split models have dozens of primitives that each get decoded separately.
 //
 // Reads every *.glb from `raw-models/` (or the project root as a fallback) and
 // writes optimized versions into `public/models/`.
@@ -8,9 +11,9 @@ import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { NodeIO } from '@gltf-transform/core';
-import { KHRDracoMeshCompression } from '@gltf-transform/extensions';
-import { dedup, prune, resample, textureCompress, draco } from '@gltf-transform/functions';
-import draco3d from 'draco3dgltf';
+import { EXTMeshoptCompression } from '@gltf-transform/extensions';
+import { dedup, prune, resample, textureCompress, reorder, meshopt } from '@gltf-transform/functions';
+import { MeshoptEncoder } from 'meshoptimizer';
 import sharp from 'sharp';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -20,12 +23,10 @@ const outDir = path.join(root, 'public', 'models');
 
 const TEXTURE_MAX = 2048; // no need for 4K/8K on the web
 
+await MeshoptEncoder.ready;
 const io = new NodeIO()
-  .registerExtensions([KHRDracoMeshCompression])
-  .registerDependencies({
-    'draco3d.decoder': await draco3d.createDecoderModule(),
-    'draco3d.encoder': await draco3d.createEncoderModule(),
-  });
+  .registerExtensions([EXTMeshoptCompression])
+  .registerDependencies({ 'meshopt.encoder': MeshoptEncoder });
 
 const mb = (bytes) => (bytes / 1024 / 1024).toFixed(1);
 
@@ -50,7 +51,8 @@ for (const file of files) {
     prune(),
     resample(),
     textureCompress({ encoder: sharp, targetFormat: 'webp', resize: [TEXTURE_MAX, TEXTURE_MAX] }),
-    draco()
+    reorder({ encoder: MeshoptEncoder }), // optimize vertex order for meshopt
+    meshopt({ encoder: MeshoptEncoder, level: 'high' })
   );
   await io.write(dst, document);
 

@@ -3,6 +3,9 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
+  // Single CSS bundle (linked from index.html) so styles apply on every route,
+  // including the dynamically-loaded /admin — async CSS injection was flaky.
+  build: { cssCodeSplit: false },
   plugins: [
     react(),
     VitePWA({

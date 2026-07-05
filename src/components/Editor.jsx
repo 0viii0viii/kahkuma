@@ -24,10 +24,17 @@ const SWATCHES = [
 
 export function Editor({ work, onClose }) {
   const [palette, setPalette] = useState({ ...(work.palette || {}) });
+  const [title, setTitle] = useState(work.title || '');
+  const [caption, setCaption] = useState(work.caption || '');
+  const [year, setYear] = useState(work.year || '');
   const [selected, setSelected] = useState(null);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState('');
-  const dirty = JSON.stringify(palette) !== JSON.stringify(work.palette || {});
+  const dirty =
+    JSON.stringify(palette) !== JSON.stringify(work.palette || {}) ||
+    title !== work.title ||
+    caption !== (work.caption || '') ||
+    year !== (work.year || '');
 
   const setColor = (hex) => {
     if (!selected) return;
@@ -45,12 +52,13 @@ export function Editor({ work, onClose }) {
   const save = async () => {
     setSaving(true);
     setMsg('');
-    const { error } = await supabase.from('works').update({ palette }).eq('id', work.id);
+    const patch = { palette, title: title.trim() || work.title, caption: caption.trim(), year: year.trim() };
+    const { error } = await supabase.from('works').update(patch).eq('id', work.id);
     setSaving(false);
     if (error) setMsg('저장 실패: ' + error.message);
     else {
       setMsg('저장됐습니다 ✓');
-      work.palette = palette; // keep local dirty check in sync
+      Object.assign(work, patch); // keep local dirty check in sync
     }
   };
 
@@ -86,7 +94,13 @@ export function Editor({ work, onClose }) {
       <aside className="editor__panel">
         <div className="editor__head">
           <button className="admin__link" onClick={onClose}>← 목록</button>
-          <b>{work.title}</b>
+          <b>{title || work.title}</b>
+        </div>
+
+        <div className="editor__fields">
+          <input placeholder="작품명" value={title} onChange={(e) => setTitle(e.target.value)} />
+          <input placeholder="설명" value={caption} onChange={(e) => setCaption(e.target.value)} />
+          <input placeholder="연도" value={year} onChange={(e) => setYear(e.target.value)} />
         </div>
 
         <p className="editor__hint">모델의 <b>파츠를 클릭</b>해 선택한 뒤 색을 지정하세요.</p>
@@ -125,7 +139,7 @@ export function Editor({ work, onClose }) {
         </button>
 
         <button className="admin__btn" disabled={saving || !dirty} onClick={save}>
-          {saving ? '저장 중…' : dirty ? '색상 저장' : '저장됨'}
+          {saving ? '저장 중…' : dirty ? '저장' : '저장됨'}
         </button>
         {msg && <p className={msg.startsWith('저장 실패') ? 'admin__err' : 'admin__ok'}>{msg}</p>}
       </aside>

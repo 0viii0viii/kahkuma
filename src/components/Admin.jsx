@@ -84,7 +84,14 @@ function Dashboard() {
   if (editing) {
     return (
       <Editor
-        work={{ id: editing.id, title: editing.title, file: editing.url, palette: editing.palette || {} }}
+        work={{
+          id: editing.id,
+          title: editing.title,
+          caption: editing.caption || '',
+          year: editing.year || '',
+          file: editing.url,
+          palette: editing.palette || {},
+        }}
         onClose={() => {
           setEditing(null);
           refresh();

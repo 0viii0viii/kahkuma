@@ -314,3 +314,22 @@
     max-height: 46vh;
   }
 }
+
+.editor__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.editor__fields input {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border-radius: 9px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9rem;
+}
+.editor__fields input::placeholder {
+  color: var(--text-dim);
+}

@@ -50,7 +50,7 @@ export function Spotlight({ work, onClose }) {
               so the orbit target sits exactly on the model center → it spins in
               place instead of swinging around the screen. */}
           <Suspense fallback={<Loader />}>
-            <Model url={work.file} />
+            <Model url={work.file} palette={work.palette} />
             <ContactShadows
               position={[0, -1.02, 0]}
               opacity={0.55}
@@ -96,7 +96,7 @@ export function Spotlight({ work, onClose }) {
         >
           {autoRotate ? '자동 회전 ⏸' : '자동 회전 ▶'}
         </button>
-        <span className="viewer__hint">드래그로 회전 · 휠로 확대</span>
+        <span className="viewer__hint">드래그로 회전 · 확대·축소</span>
       </div>
 
       <button className="viewer__close" onClick={onClose} aria-label="닫기">

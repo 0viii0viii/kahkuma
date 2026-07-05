@@ -58,7 +58,7 @@ export function WorkCard({ work, index, onOpen }) {
               >
                 <Bounds fit clip observe margin={1.15}>
                   <AutoSpin paused={hovered}>
-                    <Model url={work.file} />
+                    <Model url={work.file} palette={work.palette} />
                   </AutoSpin>
                 </Bounds>
               </PresentationControls>

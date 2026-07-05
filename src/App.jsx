@@ -12,7 +12,7 @@ export default function App() {
 
       <header className="masthead">
         <div className="masthead__brand">
-          <span className="masthead__mark" />
+          <img className="masthead__logo" src="/kahkuma.jpg" alt="KAHKUMA 로고" />
           KAHKUMA
         </div>
         <nav className="masthead__nav">

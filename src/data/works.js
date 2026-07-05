@@ -45,5 +45,23 @@ export const works = [
     medium: '3D Sculpture · GLB',
     caption: '세 겹의 여백, 비워서 완성한 형태.',
     accent: '#e8b04b',
+    // Per-part colors keyed by mesh name (identified via a debug render).
+    // Based on the reference toy: orange ears, white helmet, blue eye-paint,
+    // brown vest, tan skin, grey gloves, black pants, grey/white sneakers.
+    palette: {
+      obj001: '#d9682a', // 귀 ears
+      obj002: '#e9e4da', // 헬멧 helmet
+      obj003: '#3f7ca8', // 눈가 블루 페인트 face paint (eyes)
+      obj004: '#d4a276', // 얼굴 피부 face skin
+      obj0: '#38271b', // 머리카락 hair
+      obj005: '#47301f', // 조끼 vest
+      obj006: '#d4a276', // 팔 arms (skin)
+      obj007: '#6a6e72', // 장갑 gloves
+      obj008: '#1c1c1e', // 바지 pants
+      obj009: '#33333a', // 신발 shoes
+      obj010: '#cfc9bb', // 신발 중창 midsole
+      obj011: '#e4dfd4', // 밑창 soles
+      obj012: '#2a2a2f', // 발목 디테일 ankle detail
+    },
   },
 ];

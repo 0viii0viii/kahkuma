@@ -70,12 +70,12 @@ body {
   font-size: 1.05rem;
 }
 
-.masthead__mark {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #fff, #ff6b4a 60%, #7bd88f);
-  box-shadow: 0 0 16px rgba(255, 107, 74, 0.6);
+.masthead__logo {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid var(--line);
 }
 
 .masthead__nav span {
@@ -333,6 +333,7 @@ body {
   border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.04);
   cursor: pointer;
+  white-space: nowrap;
   transition: all 0.3s ease;
 }
 
@@ -346,6 +347,7 @@ body {
   font-size: 0.75rem;
   color: var(--text-dim);
   letter-spacing: 0.05em;
+  white-space: nowrap;
 }
 
 .viewer__close {
@@ -404,6 +406,11 @@ body {
   }
   .viewer__meta {
     text-align: left;
+  }
+  /* Stack the chip + hint so neither wraps mid-word on narrow screens */
+  .viewer__controls {
+    flex-direction: column;
+    gap: 0.55rem;
   }
 }
 

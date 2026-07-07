@@ -6,14 +6,14 @@ import { Spotlight } from './components/Spotlight.jsx';
 
 export default function App() {
   const [active, setActive] = useState(null);
-  // DB is the source of truth; fall back to the bundled curated set if it's
-  // empty/unreachable so the gallery is never blank.
-  const [works, setWorks] = useState(curated);
+  // Load the gallery from the DB once (source of truth). Start as null (not the
+  // static set) so we don't paint the curated works and then swap to the DB set
+  // — that swap changed every card's key (string id → uuid) and forced a full
+  // reload of every model. The bundled `curated` is only a fallback.
+  const [works, setWorks] = useState(null);
 
   useEffect(() => {
-    fetchWorks().then((all) => {
-      if (all.length) setWorks(all);
-    });
+    fetchWorks().then((all) => setWorks(all.length ? all : curated));
   }, []);
 
   return (
@@ -31,7 +31,7 @@ export default function App() {
       </header>
 
       <main className="grid">
-        {works.map((work, i) => (
+        {(works ?? []).map((work, i) => (
           <WorkCard key={work.id} work={work} index={i} onOpen={setActive} />
         ))}
       </main>

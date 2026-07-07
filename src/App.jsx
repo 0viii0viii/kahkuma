@@ -31,9 +31,24 @@ export default function App() {
       </header>
 
       <main className="grid">
-        {(works ?? []).map((work, i) => (
-          <WorkCard key={work.id} work={work} index={i} onOpen={setActive} />
-        ))}
+        {works === null
+          ? Array.from({ length: 6 }, (_, i) => (
+              <div key={i} className="card card--skeleton" style={{ animationDelay: `${i * 90}ms` }}>
+                <div className="card__stage">
+                  <div className="card__skeleton" aria-hidden />
+                </div>
+                <div className="card__meta">
+                  <span className="skeleton-line skeleton-line--sm" />
+                  <div>
+                    <span className="skeleton-line skeleton-line--title" />
+                    <span className="skeleton-line skeleton-line--sub" />
+                  </div>
+                </div>
+              </div>
+            ))
+          : works.map((work, i) => (
+              <WorkCard key={work.id} work={work} index={i} onOpen={setActive} />
+            ))}
       </main>
 
       <footer className="footer">

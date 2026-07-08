@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Bounds, Environment, Lightformer, PresentationControls } from '@react-three/drei';
+import { Environment, Lightformer, PresentationControls } from '@react-three/drei';
 import { Model } from './Model.jsx';
 
 // Sentinel rendered inside <Suspense> — it only mounts once the model has
@@ -69,11 +69,12 @@ export function WorkCard({ work, index, onOpen }) {
                   polar={[-0.3, 0.3]}
                   azimuth={[-0.6, 0.6]}
                 >
-                  <Bounds fit clip observe margin={1.15}>
-                    <AutoSpin paused={hovered}>
-                      <Model url={work.file} palette={work.palette} />
-                    </AutoSpin>
-                  </Bounds>
+                  {/* Models are pre-normalized to ~2 units at origin, so a
+                      fixed camera frames them — no <Bounds> auto-fit (its
+                      post-load camera snap caused a "far → jump closer" flicker). */}
+                  <AutoSpin paused={hovered}>
+                    <Model url={work.file} palette={work.palette} />
+                  </AutoSpin>
                 </PresentationControls>
                 {/* CDN-free reflections via inline lightformers */}
                 <Environment resolution={128}>
